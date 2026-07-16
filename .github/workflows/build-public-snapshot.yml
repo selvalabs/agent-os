@@ -1,0 +1,68 @@
+name: Build Public Snapshot
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-public-snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate source snapshot
+        shell: bash
+        run: |
+          set -o pipefail
+          python scripts/validate_agent_os.py . | tee validation-report.txt
+
+      - name: Test repository bootstrap
+        shell: bash
+        run: |
+          set -euo pipefail
+          tmp="$(mktemp -d)"
+          git -C "$tmp" init -q
+          python scripts/bootstrap_repo.py \
+            --target "$tmp" \
+            --project-name "Projeto Exemplo" \
+            --repo-slug "projeto-exemplo" \
+            --dry-run
+
+      - name: Build clean archive
+        run: python scripts/build_public_snapshot.py --output-dir dist
+
+      - name: Verify archive contents
+        shell: bash
+        run: |
+          set -euo pipefail
+          unzip -l dist/selvalabs-agent-os.zip
+          if unzip -l dist/selvalabs-agent-os.zip | grep -E '(^|/)\.git(/|$)'; then
+            echo "The public snapshot contains .git" >&2
+            exit 1
+          fi
+
+      - name: Upload validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-snapshot-validation
+          path: validation-report.txt
+          if-no-files-found: warn
+
+      - name: Upload public snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: selvalabs-agent-os-public-snapshot
+          path: |
+            dist/selvalabs-agent-os.zip
+            dist/selvalabs-agent-os/RELEASE-MANIFEST.json
+          if-no-files-found: error
+          retention-days: 30

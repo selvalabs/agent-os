@@ -1,0 +1,55 @@
+name: Validate Agent OS
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate Agent OS
+        id: validate
+        shell: bash
+        run: |
+          set +e
+          python scripts/validate_agent_os.py . > validation-report.txt 2>&1
+          exit_code=$?
+          cat validation-report.txt
+          echo "exit_code=$exit_code" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Upload validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-report
+          path: validation-report.txt
+          if-no-files-found: error
+
+      - name: Enforce validation result
+        if: steps.validate.outputs.exit_code != '0'
+        run: exit 1
+
+      - name: Test bootstrap dry-run
+        shell: bash
+        run: |
+          set -euo pipefail
+          tmp="$(mktemp -d)"
+          git -C "$tmp" init -q
+          python scripts/bootstrap_repo.py \
+            --target "$tmp" \
+            --project-name "CI Test" \
+            --repo-slug "ci-test" \
+            --dry-run

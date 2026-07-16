@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SelvaLabs Agent OS Repository Manifest",
+  "type": "object",
+  "required": [
+    "apiVersion",
+    "kind",
+    "metadata",
+    "spec"
+  ],
+  "properties": {
+    "apiVersion": {
+      "const": "selvalabs.agent-os/v1"
+    },
+    "kind": {
+      "const": "Repository"
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]+$"
+        }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "required": [
+        "owner",
+        "criticality",
+        "canonicalInstructions",
+        "agentDocs"
+      ],
+      "properties": {
+        "owner": {
+          "type": "string"
+        },
+        "criticality": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        },
+        "canonicalInstructions": {
+          "type": "string"
+        },
+        "agentDocs": {
+          "type": "string"
+        },
+        "policies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

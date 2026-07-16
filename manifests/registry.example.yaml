@@ -1,0 +1,13 @@
+apiVersion: selvalabs.agent-os/v1
+kind: RepositoryRegistry
+repositories:
+  - slug: base-de-estudos-ads
+    domain: conhecimento
+    sourceOfTruth: notion
+    risk: low
+    pilot: editorial-sync
+  - slug: produto-piloto
+    domain: produto
+    sourceOfTruth: github
+    risk: high
+    pilot: agent-operations

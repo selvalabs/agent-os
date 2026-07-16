@@ -1,0 +1,21 @@
+apiVersion: selvalabs.agent-os/v1
+kind: Repository
+metadata:
+  name: example-project
+spec:
+  owner: team-or-person
+  criticality: medium
+  canonicalInstructions: AGENTS.md
+  agentDocs: docs/agent
+  policies:
+    - readonly-first
+    - repository-safety
+    - secrets-and-credentials
+  skills:
+    - safe-repo-change
+    - github-pr-review
+    - agent-handoff
+  production:
+    enabled: false
+    deployDocument: docs/agent/DEPLOY.md
+    vpsDocument: docs/agent/VPS.md

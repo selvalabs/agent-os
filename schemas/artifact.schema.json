@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent Artifact",
+  "type": "object",
+  "required": [
+    "slug",
+    "class",
+    "scope",
+    "canonicalSource",
+    "version",
+    "status"
+  ],
+  "properties": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]+$"
+    },
+    "class": {
+      "enum": [
+        "policy",
+        "skill",
+        "runbook",
+        "instruction",
+        "decision",
+        "handoff",
+        "research"
+      ]
+    },
+    "scope": {
+      "enum": [
+        "global",
+        "project",
+        "repository",
+        "directory",
+        "task"
+      ]
+    },
+    "canonicalSource": {
+      "enum": [
+        "notion",
+        "github",
+        "generated"
+      ]
+    },
+    "version": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "inbox",
+        "draft",
+        "active",
+        "review",
+        "deprecated",
+        "archived"
+      ]
+    },
+    "contentHash": {
+      "type": "string"
+    },
+    "repository": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string"
+    },
+    "lastReviewedAt": {
+      "type": "string",
+      "format": "date"
+    },
+    "enforcement": {
+      "enum": [
+        "guidance",
+        "ci",
+        "hook",
+        "sandbox"
+      ]
+    }
+  }
+}

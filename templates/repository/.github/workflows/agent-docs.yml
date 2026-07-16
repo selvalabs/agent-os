@@ -1,0 +1,30 @@
+name: Agent documentation
+
+on:
+  pull_request:
+    paths:
+      - AGENTS.md
+      - CLAUDE.md
+      - docs/agent/**
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  structure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check required files
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f AGENTS.md
+          test -f docs/agent/index.md
+          test -f docs/agent/SECURITY.md
+          test -f docs/agent/HANDOFF.md
+          if grep -RInE '(BEGIN (RSA|OPENSSH|EC) PRIVATE KEY|api[_-]?key[[:space:]]*[:=][[:space:]]*[^<{[:space:]]+)' AGENTS.md CLAUDE.md docs/agent; then
+            echo "Possível segredo encontrado. Revisão necessária."
+            exit 1
+          fi
