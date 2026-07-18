@@ -1,126 +1,130 @@
 # START HERE — Meu Cérebro
 
-> Template genérico para importação. Substitua os placeholders e exemplos antes de usar.
+> Template genérico. Substitua os exemplos antes de usar.
 
 ## Propósito
 
-Este Cérebro organiza conhecimento, pesquisa, curadoria, decisões transversais, projetos e memória durável para agentes. Código, arquitetura, testes, deploy e estado operacional continuam nos repositórios GitHub.
+Este Cérebro organiza projetos, conhecimento, agentes, decisões e memória durável sem misturar suas fontes canônicas.
 
-## Privacidade
+## Onde cada informação vive
 
-- não cole conteúdo de outro workspace;
-- não publique nomes, URLs ou IDs privados;
-- use exemplos fictícios em capturas e documentação;
-- mantenha clientes, projetos internos e agentes privados apenas no seu ambiente.
+```text
+Projetos e produtos
+→ 02 — Projetos e Produtos
 
-## Memória central
+Código e operação específica
+→ GitHub do projeto
 
-Crie ou conecte uma **Biblioteca de Markdowns** como memória durável do Cérebro.
+Pendências e continuidade
+→ issues, PRs e HANDOFF.md
 
-Processos, decisões, integrações, incidentes resolvidos, runbooks e aprendizados relevantes podem criar ou atualizar um Markdown nessa Biblioteca.
+Memória global, transversal ou entre sessões
+→ Biblioteca de Markdowns
+```
 
-As áreas abaixo usam views vinculadas da mesma Biblioteca. Evite cópias independentes dos documentos.
-
-## Rotas principais
+## Rotas
 
 ### 01 — Conhecimento
 
-Formação, estudos, pesquisas, referências, sínteses, glossários e view de Markdowns liberados dos tipos Pesquisa, Manual e Aprendizado.
+Estudos, pesquisas, fontes, sínteses e conhecimento de domínio.
 
 ### 02 — Projetos e Produtos
 
-Catálogo de projetos, responsáveis, repositórios, START HERE, arquitetura, handoff, ambientes e view da Biblioteca filtrada por projeto.
+Catálogo canônico dos projetos com estado, responsável, finalidade, repositório, START HERE, arquitetura, ambientes, decisões e fontes.
+
+Projetos não são registrados na Biblioteca.
 
 ### 03 — Sistema de Agentes
 
-Agentes, ferramentas, repositórios agentic-first, skills, políticas, prompts, templates, compatibilidade, integrações MCP e views da Biblioteca por agente.
+Agentes, ferramentas, permissões, integrações MCP, skills, políticas e prompts.
 
 ### 04 — Operação e Governança
 
-Registro opcional de atividades, decisões, processos, runbooks, incidentes, integrações, publicações, revisões, permissões e view de itens liberados ou a revisar.
+Decisões transversais, revisões, responsáveis, publicações e registro cronológico opcional de sessões.
 
 ### 05 — Laboratório
 
-Hipóteses, experimentos, protótipos, testes de modelos e RAG, propostas de schema, automações e rascunhos ainda não aprovados.
+Hipóteses, experimentos, protótipos e propostas ainda não aprovadas.
 
-## Registro de atividades versus Biblioteca
+## Biblioteca de Markdowns
 
-- **Registro de atividades:** histórico cronológico opcional do que aconteceu.
-- **Biblioteca:** memória temática, curada e reutilizável.
+A Biblioteca registra sínteses que agentes precisam recuperar em sessões futuras:
 
-Quando uma atividade revelar processo ou aprendizado durável, consolide-o na Biblioteca.
+- sínteses de conversas relevantes;
+- decisões globais;
+- preferências operacionais estáveis;
+- aprendizados transversais;
+- padrões recorrentes;
+- contexto reutilizável sobre agentes e ferramentas.
+
+Não registre nela:
+
+- projetos;
+- documentação técnica completa;
+- estado atual de tarefa;
+- transcrições integrais;
+- logs;
+- segredos.
+
+Uma relação com projeto é opcional e indica apenas origem ou aplicabilidade.
 
 ## Antes de agir
 
-1. identifique o projeto, agente ou domínio;
-2. abra o registro correspondente;
-3. busque Markdowns relacionados;
-4. use operacionalmente somente itens liberados;
-5. siga os links para fontes canônicas;
-6. use GitHub para contexto operacional;
-7. não trate Laboratório ou Rascunho como regra aprovada.
+1. identifique se existe projeto;
+2. abra o registro do projeto;
+3. siga para as fontes canônicas;
+4. consulte a Biblioteca somente se memória global ou de sessão for útil;
+5. use apenas conteúdo revisado;
+6. não trate Laboratório como regra aprovada.
 
-## Depois de uma ação relevante
+## Depois de agir
 
 ```text
-execução e validação
-→ issue, PR, commit ou resultado verificável
-→ avaliar se há memória reutilizável
-→ criar ou atualizar Markdown
-→ preencher projeto, agente, tipo, origem e versão
-→ revisão humana
-→ liberação para uso
+resultado validado
+→ classificar destino
+   projeto → Projetos
+   específico → GitHub
+   temporário → issue, PR ou HANDOFF
+   conhecimento → Conhecimento
+   memória global → Biblioteca
+→ revisão
 ```
 
-Registre processos reutilizáveis, decisões, incidentes resolvidos, integrações, diagnósticos não triviais, deploy, rollback, backup e aprendizados importantes.
+## Views recomendadas
 
-Não registre segredos, logs brutos, conversas completas ou ações triviais.
+### Projetos
+
+- Ativos;
+- Incubação;
+- Manutenção;
+- Revisar;
+- Arquivados.
+
+### Biblioteca
+
+- Memória ativa;
+- Sínteses de sessões;
+- Global e transversal;
+- Por agente ou ferramenta;
+- Precisa revisar.
+
+Não use `Markdowns por projeto` como navegação principal.
 
 ## Fontes canônicas
 
 | Conteúdo | Fonte |
 |---|---|
-| Memória durável | Biblioteca de Markdowns criada neste workspace |
-| Pesquisa e curadoria | Este Cérebro |
-| Catálogo de projetos | Este Cérebro |
-| Código, arquitetura, testes e deploy | GitHub do projeto |
-| Issue, PR e commit | GitHub do projeto |
-| Estado temporário | `HANDOFF.md` |
-| Registro cronológico opcional | Registro de atividades ou sessões |
-| Políticas, skills e templates compartilhados | SelvaLabs Agent OS |
-| Busca, embeddings e consultas rápidas | Camada derivada |
+| Projetos | Banco Projetos deste Cérebro |
+| Conhecimento | Área 01 |
+| Código e operação | GitHub do projeto |
+| Estado temporário | Issue, PR e HANDOFF |
+| Memória entre sessões | Biblioteca de Markdowns |
+| Políticas e skills compartilhadas | Agent OS |
 | Segredos | Gerenciador de segredos |
 
-## Acesso de agentes
+## Privacidade
 
-Integrações começam em modo de leitura. Escrita exige intenção explícita, destino definido, conteúdo revisável e preservação das páginas existentes.
-
-## Views recomendadas
-
-- Memória liberada;
-- Markdowns a revisar;
-- Projetos ativos;
-- Markdowns por projeto;
-- Markdowns por agente;
-- Decisões em revisão;
-- Publicações pendentes;
-- Laboratório e rascunhos.
-
-## Exemplos fictícios
-
-```text
-Projeto: Produto Alpha
-Repositório: example-org/product-alpha
-Agentes: Agente de Código, Agente de Operações
-Ambiente: https://example.com
-```
-
-## Responsáveis
-
-- Responsável editorial: definir neste workspace.
-- Responsáveis de projeto: definir no catálogo de Projetos.
-- Última revisão desta página: preencher após importação.
-
-## Documentação de implementação
-
-A arquitetura, os schemas, o fluxo MCP e as regras da Biblioteca permanecem versionados em `selvalabs-agent-os/docs/notion/`.
+- não cole conteúdo de outro workspace;
+- não publique nomes, URLs ou IDs privados;
+- use projetos e agentes fictícios em exemplos públicos;
+- mantenha clientes e projetos internos somente no ambiente privado.
