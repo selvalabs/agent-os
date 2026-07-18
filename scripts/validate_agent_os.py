@@ -38,12 +38,10 @@ PUBLIC_PRIVACY_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     ),
     (
         "link para outro repositório SelvaLabs não liberado no framework",
-        re.compile(r"https://github\.com/selvalabs/(?!selvalabs-agent-os(?:/|\b))[A-Za-z0-9_.-]+", re.IGNORECASE),
+        re.compile(r"https://github\.com/selvalabs/(?!selvalabs-agent-os(?:/|\b)|agent-os(?:/|\b))[A-Za-z0-9_.-]+", re.IGNORECASE),
     ),
 ]
 
-# Hashes SHA-256 de marcadores privados normalizados. Os valores originais não são
-# versionados no repositório público. O scanner compara n-grams de até 8 tokens.
 PRIVATE_PHRASE_HASHES = {
     "788eb2efc52660fe41472319f0d2c623be6540c956921b3632fcc934bf1be10d",
     "a18c05dcf81fe8461573c6afbe2becd85e4b2abae5f8fb99db29dd960e2d418d",
@@ -74,6 +72,22 @@ PUBLIC_TEXT_ROOTS = {
     ".github",
 }
 
+FORBIDDEN_MEMORY_ARCHITECTURE_PHRASES = {
+    "view da biblioteca filtrada pelo projeto",
+    "view da biblioteca de markdowns deste projeto",
+    "biblioteca de markdowns do projeto",
+    "toda página de projeto deve incluir uma view vinculada da biblioteca",
+    "páginas de projeto com views filtradas da biblioteca",
+    "as áreas 01 a 05 devem usar views vinculadas da mesma biblioteca",
+}
+
+REQUIRED_MEMORY_BOUNDARIES = {
+    "README.md": "biblioteca de markdowns não é um catálogo de projetos",
+    "docs/notion/START-HERE.md": "não é o lugar onde os projetos são registrados",
+    "docs/notion/MARKDOWN-LIBRARY-MEMORY.md": "a biblioteca não registra projetos",
+    "templates/repository/START-HERE.md": "não cadastre o projeto na biblioteca de markdowns",
+}
+
 
 def parse_frontmatter(text: str) -> dict[str, str]:
     if not text.startswith("---\n"):
@@ -92,16 +106,18 @@ def parse_frontmatter(text: str) -> dict[str, str]:
 
 def is_public_text_path(path: Path, root: Path) -> bool:
     relative = path.relative_to(root)
-    first = relative.parts[0]
-    return first in PUBLIC_TEXT_ROOTS
+    return relative.parts[0] in PUBLIC_TEXT_ROOTS
 
 
-def normalized_tokens(text: str) -> list[str]:
+def normalized_text(text: str) -> str:
     normalized = unicodedata.normalize("NFKD", text)
     normalized = "".join(ch for ch in normalized if not unicodedata.combining(ch))
     normalized = normalized.lower()
-    normalized = re.sub(r"[^a-z0-9]+", " ", normalized)
-    return normalized.split()
+    return re.sub(r"[^a-z0-9]+", " ", normalized).strip()
+
+
+def normalized_tokens(text: str) -> list[str]:
+    return normalized_text(text).split()
 
 
 def contains_private_phrase_fingerprint(text: str) -> bool:
@@ -191,6 +207,21 @@ def main() -> int:
                     errors.append(f"Possível contexto privado ({label}) em {path.relative_to(root)}")
             if contains_private_phrase_fingerprint(text):
                 errors.append(f"Possível marcador privado conhecido em {path.relative_to(root)}")
+
+            normalized = normalized_text(text)
+            for phrase in FORBIDDEN_MEMORY_ARCHITECTURE_PHRASES:
+                if phrase in normalized:
+                    errors.append(
+                        f"Arquitetura mistura projeto e Biblioteca em {path.relative_to(root)}: {phrase}"
+                    )
+
+    for relative, required_phrase in REQUIRED_MEMORY_BOUNDARIES.items():
+        path = root / relative
+        if not path.exists():
+            continue
+        normalized = normalized_text(path.read_text(encoding="utf-8", errors="replace"))
+        if required_phrase not in normalized:
+            errors.append(f"Limite entre Projetos e Biblioteca ausente em {relative}")
 
     readme = root / "README.md"
     if readme.exists():
