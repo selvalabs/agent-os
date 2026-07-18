@@ -1,93 +1,75 @@
 # START HERE — SelvaLabs Agent OS
 
-Este é o ponto de entrada para humanos e agentes que começam a trabalhar com o SelvaLabs Agent OS.
+Este é o ponto de entrada para humanos e agentes que trabalham com o SelvaLabs Agent OS.
 
-Não carregue toda a documentação de uma vez. Localize somente o contexto necessário para a tarefa atual.
+Não carregue toda a documentação. Identifique primeiro qual tipo de contexto a tarefa exige.
 
-## O que é o Agent OS
-
-O SelvaLabs Agent OS é uma base reutilizável para preparar repositórios para construção e manutenção agentic-first. Ele fornece políticas, skills, templates, validações, handoffs e regras de segurança compartilhadas.
-
-Ele não contém o Cérebro pessoal de nenhum mantenedor. A documentação ensina cada usuário a criar a própria estrutura.
-
-## Comece pela sua necessidade
+## Rotas principais
 
 | Necessidade | Leia primeiro |
 |---|---|
-| Entender a arquitetura completa | `docs/architecture/SPEC-AGENT-OS.md` |
-| Criar um Cérebro próprio | `docs/notion/START-HERE.md` |
-| Entender as áreas 01–05 | `docs/notion/NOTION-BRAIN-ARCHITECTURE.md` |
-| Criar memória durável | `docs/notion/MARKDOWN-LIBRARY-MEMORY.md` |
-| Criar um novo repositório | `templates/repository/START-HERE.md` e `scripts/bootstrap_repo.py` |
+| Entender a arquitetura | `docs/architecture/SPEC-AGENT-OS.md` |
+| Criar um Cérebro | `docs/notion/START-HERE.md` |
+| Organizar projetos no Notion | `docs/notion/NOTION-BRAIN-ARCHITECTURE.md` |
+| Criar memória para agentes | `docs/notion/MARKDOWN-LIBRARY-MEMORY.md` |
+| Definir bancos e relações | `docs/notion/DATABASE-SCHEMAS.md` |
+| Criar um repositório | `templates/repository/START-HERE.md` |
 | Entender fontes canônicas | `docs/governance/CANONICAL-SOURCES.md` |
-| Entender segurança e permissões | `docs/governance/SECURITY-MODEL.md` |
-| Sanitizar conteúdo público | `docs/governance/PUBLIC-SANITIZATION.md` |
-| Gerar distribuição com histórico limpo | `docs/release/PUBLIC-RELEASE.md` e `scripts/build_public_snapshot.py` |
-| Encontrar capacidade reutilizável | `skills/` |
-| Aplicar regras compartilhadas | `policies/` |
+| Publicar com segurança | `docs/governance/PUBLIC-SANITIZATION.md` |
 
-## Regra START HERE
-
-Todo espaço preparado pelo Agent OS deve possuir uma entrada `START HERE` curta e visível.
-
-Ela deve:
-
-1. explicar o propósito do espaço;
-2. indicar a ordem mínima de leitura;
-3. apontar fontes canônicas;
-4. separar contexto estável de estado temporário;
-5. impedir navegação por tentativa e erro;
-6. orientar leitura seletiva, não carregamento integral.
-
-## Memória durável
-
-A arquitetura recomenda que cada usuário crie sua própria **Biblioteca de Markdowns** como memória durável e curada.
-
-Processos, decisões, incidentes, integrações, runbooks e aprendizados relevantes devem criar ou atualizar um Markdown nessa biblioteca.
+## Onde cada informação vive
 
 ```text
-execução relevante
-→ validação
-→ issue, PR, commit ou resultado verificável
-→ avaliação de memória
-→ criar ou atualizar Markdown
-→ revisão
-→ liberação para uso
+projeto e produto
+→ 02 — Projetos e Produtos
+
+código, arquitetura e operação específica
+→ GitHub do projeto
+
+estado temporário, pendências e continuidade
+→ issue, PR e HANDOFF.md
+
+memória global, transversal ou necessária entre sessões
+→ Biblioteca de Markdowns
 ```
 
-Não registre conversas completas, ações triviais, logs brutos ou segredos como memória.
+A Biblioteca de Markdowns não registra projetos. Ela registra sínteses reutilizáveis que agentes precisam recuperar em sessões futuras.
+
+## Gatilho de memória
+
+Antes de criar um Markdown, classifique o resultado:
+
+1. é específico de um projeto? Atualize a página do projeto ou o GitHub.
+2. é estado temporário? Atualize issue, PR ou `HANDOFF.md`.
+3. é global, transversal ou necessário para futuras sessões? Atualize a Biblioteca.
+4. é trivial, bruto ou volátil? Não crie memória durável.
+
+```text
+sessão ou trabalho relevante
+→ validar resultado
+→ classificar destino
+→ registrar na fonte correta
+→ revisar
+```
 
 ## Fontes canônicas
 
-- memória durável: **Biblioteca de Markdowns criada pelo usuário**;
-- conhecimento e curadoria: **Cérebro editorial do usuário**;
-- código, arquitetura e operação: **GitHub do projeto**;
-- estado temporário: **issue, PR e `HANDOFF.md`**;
-- políticas, skills e templates compartilhados: **SelvaLabs Agent OS**;
-- busca, embeddings e consultas rápidas: **camada derivada**;
-- segredos: **gerenciador de segredos**, nunca Markdown.
+- catálogo e contexto dos projetos: banco Projetos no Cérebro;
+- código e operação específica: GitHub do projeto;
+- memória global e transversal: Biblioteca de Markdowns;
+- conhecimento e curadoria: áreas editoriais do Cérebro;
+- estado temporário: issue, PR e handoff;
+- políticas e skills compartilhadas: Agent OS;
+- segredos: gerenciador de segredos.
 
 ## Princípios obrigatórios
 
-- comece em leitura ao acessar serviços externos;
-- preserve conteúdo humano existente;
-- prefira mudanças aditivas, pequenas e reversíveis;
-- não duplique documentação operacional do GitHub no Cérebro;
-- use views vinculadas em vez de copiar Markdowns;
-- não transforme `AGENTS.md` ou `START-HERE.md` em enciclopédias;
-- use issue, branch, PR, validação e revisão para mudanças compartilhadas;
-- avalie o gatilho de memória antes de encerrar ações relevantes;
-- use exemplos fictícios em documentação pública;
-- não copie nomes, URLs, IDs ou conteúdo de workspaces reais;
-- publique snapshots de repositórios privados em um novo repositório, sem importar histórico, issues ou pull requests.
-
-## Fluxo recomendado
-
-1. leia este arquivo;
-2. escolha a rota correspondente;
-3. consulte somente os documentos necessários;
-4. abra ou relacione uma issue;
-5. execute a mudança em branch própria;
-6. valide e abra pull request;
-7. atualize o handoff quando houver continuidade;
-8. registre memória quando houver processo ou aprendizado reutilizável.
+- mantenha um `START HERE` visível;
+- preserve conteúdo existente;
+- use leitura seletiva;
+- não duplique projeto na Biblioteca;
+- não copie documentação operacional do GitHub para o Notion;
+- use issue, branch, PR e CI;
+- comece integrações externas em leitura;
+- use exemplos fictícios em conteúdo público;
+- nunca grave segredos em Markdown.
