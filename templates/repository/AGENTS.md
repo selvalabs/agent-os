@@ -12,9 +12,7 @@ Trabalhar neste repositório com mudanças pequenas, verificáveis e compatívei
 4. `docs/agent/WORKFLOW.md`
 5. `docs/agent/SECURITY.md`
 6. `docs/agent/HANDOFF.md`
-7. `docs/agent/DEPLOY.md` e `docs/agent/VPS.md` quando houver produção
-
-Use o `START-HERE.md` para localizar somente o contexto necessário para a tarefa atual.
+7. documentação de produção quando aplicável
 
 ## Comandos essenciais
 
@@ -31,14 +29,30 @@ Use o `START-HERE.md` para localizar somente o contexto necessário para a taref
 - Não faça force push ou limpeza destrutiva.
 - Mostre resultados de testes e limitações.
 - Atualize o handoff ao transferir a tarefa.
-- Relacione mudanças relevantes a uma issue e execute-as em branch própria.
-- Mantenha o `START-HERE.md` curto, atual e visível.
-- Avalie se processos e aprendizados relevantes precisam de memory write-back.
-- Não copie conteúdo, URLs, IDs ou nomes de um workspace privado para documentação pública.
-- Use placeholders neutros em exemplos compartilháveis.
+- Relacione mudanças relevantes a issue e branch própria.
+- Mantenha o `START-HERE.md` curto e atual.
+- Mantenha contexto específico deste projeto no repositório ou em seu registro no Cérebro.
+- Não use a Biblioteca de Markdowns para cadastrar ou documentar este projeto.
+- Crie memory write-back somente quando o resultado for global, transversal ou necessário entre sessões.
+- Use projeto apenas como origem opcional da memória.
+- Não copie contexto privado para exemplos públicos.
+
+## Classificação de contexto
+
+```text
+projeto e links
+→ registro do projeto no Cérebro
+
+código e operação
+→ este repositório
+
+continuidade
+→ issue, PR e HANDOFF
+
+memória global ou entre sessões
+→ Biblioteca de Markdowns
+```
 
 ## Contexto compartilhado
 
-Skills e políticas globais pertencem ao SelvaLabs Agent OS. Este arquivo contém apenas regras específicas de `{{REPO_SLUG}}`.
-
-Pesquisa e memória transversal podem viver no Cérebro editorial escolhido pelo proprietário do projeto. O repositório mantém código, arquitetura, testes e operação canônica.
+Skills e políticas globais pertencem ao SelvaLabs Agent OS. Pesquisa e memória transversal podem viver no Cérebro editorial. Este repositório mantém as fontes canônicas específicas de `{{REPO_SLUG}}`.
