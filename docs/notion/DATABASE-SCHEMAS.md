@@ -1,162 +1,145 @@
 # Schemas recomendados para um Cérebro
 
-Este documento propõe bancos, propriedades, relações e views que podem ser adaptados a qualquer workspace.
+Este documento propõe bancos independentes e complementares. Projetos não devem ser armazenados na Biblioteca de Markdowns.
 
-Nada aqui representa o schema real de um mantenedor. Cada pessoa ou equipe deve criar suas próprias opções de projetos, agentes, tags, estados e integrações.
-
-## 1. Biblioteca de Markdowns
+## 1. Projetos
 
 ### Função
 
-Memória durável, curada e reutilizável para humanos, agentes, automações e futuras camadas de RAG.
+Registrar os projetos, produtos, sistemas e iniciativas do Cérebro.
 
 ### Propriedades recomendadas
 
 | Propriedade | Tipo sugerido | Uso |
 |---|---|---|
-| Documento | Title | título humano e específico |
-| ID | Unique ID | identificador interno estável |
-| Slug | Text | identificador sem acentos e com hífens |
-| Status | Select/Status | Inbox, Rascunho, Ativo, Revisar, Arquivado |
-| Tipo | Select | natureza do documento |
-| Formato | Select | Markdown, MDX, YAML ou Texto |
-| Projetos | Multi-select ou Relation | projetos aos quais se aplica |
-| Agentes | Multi-select ou Relation | agentes e ferramentas consumidores |
-| Tags | Multi-select | descoberta temática e semântica |
-| Prioridade | Select | Alta, Média ou Baixa |
-| Fonte | URL | origem externa, quando houver |
-| GitHub | URL | repositório, issue, PR, commit ou arquivo relacionado |
-| Versão | Number | versão editorial |
-| Última revisão | Date | última validação humana |
-| Hash de conteúdo | Text | rastreabilidade para sync ou índice derivado |
-| Notas | Text | limites, escopo e observações |
-| Referência derivada | Text | ID opcional em banco, índice ou RAG |
-| Criado | Created time | criação do registro |
-| Editado | Last edited time | última edição |
-
-### Tipos recomendados
-
-- Manual;
-- Processo;
-- Runbook;
-- Decisão;
-- Política;
-- Skill;
-- Prompt;
-- Template;
-- Pesquisa;
-- Integração;
-- Incidente;
-- Aprendizado;
-- Handoff consolidado.
-
-Adapte as opções ao seu ambiente. Mudanças de schema devem passar por issue e revisão quando afetarem agentes ou automações.
-
-### Views mínimas
-
-- `Memória ativa` — Status = Ativo;
-- `Inbox` — Status = Inbox;
-- `Rascunhos` — Status = Rascunho;
-- `Revisar` — Status = Revisar;
-- `Arquivados` — Status = Arquivado;
-- `Por projeto` — agrupada por Projetos;
-- `Por agente` — agrupada por Agentes;
-- `Alta prioridade` — Prioridade = Alta;
-- `Sem origem` — Fonte e GitHub vazios;
-- `Revisão vencida` — Última revisão ausente ou vencida.
-
-### Views vinculadas por área
-
-| Área | Filtros principais |
-|---|---|
-| 01 — Conhecimento | Pesquisa, Manual ou Aprendizado; status liberado |
-| 02 — Projetos | projeto atual; excluir arquivados por padrão |
-| 03 — Sistema de Agentes | agente atual ou tipos Skill, Política, Prompt e Template |
-| 04 — Operação e Governança | Processo, Runbook, Decisão, Integração e Incidente |
-| 05 — Laboratório | Inbox, Rascunho e tags de experimento |
-
-### Exemplo fictício
-
-```text
-Documento: Manual — Preparar uma release segura
-Status: Rascunho
-Tipo: Manual
-Projetos: Projeto Exemplo
-Agentes: Agente de Código
-GitHub: https://github.com/example-org/example-repo/pull/1
-Versão: 1
-```
-
-## 2. Projetos
-
-Registro transversal de produtos, sistemas, estudos aplicados e repositórios.
-
-### Propriedades recomendadas
-
-| Propriedade | Tipo sugerido | Uso |
-|---|---|---|
-| Nome | Title | nome humano do projeto |
+| Nome | Title | nome do projeto |
 | Slug | Text | identificador estável |
 | Estado | Select | Incubação, Ativo, Manutenção, Pausado, Arquivado |
-| Tipo | Select | Produto, Biblioteca, Infraestrutura, Estudo, Cliente, Laboratório |
+| Tipo | Select | Produto, Sistema, Biblioteca, Infraestrutura, Estudo ou Laboratório |
+| Finalidade | Text | problema e objetivo |
+| Público/Usuários | Text | quem utiliza ou se beneficia |
+| Resultado esperado | Text | entrega ou impacto esperado |
 | Responsável | Person/Text | responsável humano |
+| Stack | Multi-select/Text | tecnologias principais |
 | Repositório | URL | GitHub canônico |
-| START HERE | URL | entrada operacional do repositório |
-| Arquitetura | URL | documento canônico no GitHub |
-| Handoff | URL | estado temporário da frente |
+| START HERE | URL | entrada do repositório |
+| Arquitetura | URL | documento canônico |
+| Ambientes | Text/URL | demonstração, homologação ou produção |
 | Acesso de agentes | Select | Sem acesso, Leitura, Escrita revisada, Operação autorizada |
-| Última revisão | Date | revisão humana mais recente |
-| Biblioteca | Relation ou linked view | memória relacionada ao projeto |
 | Decisões | Relation | decisões relacionadas |
 | Fontes | Relation | fontes relacionadas |
+| Última revisão | Date | revisão do registro |
 
-### Views mínimas
+### Views recomendadas
 
-- `Projetos ativos`;
-- `Precisam de revisão`;
-- `Agentic-first` — START HERE e repositório preenchidos;
-- `Incubação`;
-- `Arquivados`.
+- Projetos ativos;
+- Incubação;
+- Manutenção;
+- Precisam de revisão;
+- Agentic-first;
+- Arquivados.
 
-Toda página de projeto deve incluir uma view vinculada da Biblioteca filtrada pelo projeto.
+### Página do projeto
+
+```text
+Resumo
+Finalidade
+Estado
+Responsável
+Usuários
+Resultado esperado
+Stack
+Repositório
+START HERE
+Arquitetura
+Ambientes
+Acesso dos agentes
+Decisões
+Fontes
+Próxima revisão
+```
+
+A página não precisa de view da Biblioteca.
+
+## 2. Biblioteca de Markdowns
+
+### Função
+
+Registrar memória global, transversal ou necessária entre sessões para humanos e agentes.
+
+### Propriedades recomendadas
+
+| Propriedade | Tipo sugerido | Uso |
+|---|---|---|
+| Documento | Title | título da memória |
+| ID | Unique ID | identificador interno |
+| Slug | Text | identificador estável |
+| Status | Select/Status | Inbox, Rascunho, Ativo, Revisar, Arquivado |
+| Tipo de memória | Select | natureza da síntese |
+| Escopo | Select | Global, Transversal, Agente, Ferramenta, Sessão |
+| Agentes/Ferramentas | Multi-select/Relation | consumidores previstos |
+| Tags | Multi-select | recuperação temática |
+| Sessão de origem | Text/URL | conversa, data ou referência |
+| Fonte | URL/Text | origem verificável |
+| Projeto de origem | Relation | opcional; indica onde surgiu |
+| GitHub | URL | referência opcional |
+| Prioridade | Select | ordem de revisão |
+| Versão | Number | versão editorial |
+| Última revisão | Date | validação humana |
+| Notas | Text | limites e condições |
+| Referência derivada | Text | ID opcional em índice ou RAG |
+| Criado | Created time | criação |
+| Editado | Last edited time | edição |
+
+`Projeto de origem` é opcional e não deve ser usado para montar o projeto.
+
+### Tipos de memória recomendados
+
+- Síntese de sessão;
+- Contexto global;
+- Aprendizado transversal;
+- Preferência operacional;
+- Decisão global;
+- Padrão recorrente;
+- Contexto de agente;
+- Contexto de ferramenta;
+- Integração transversal;
+- Diagnóstico reutilizável;
+- Handoff consolidado entre sessões.
+
+### Views recomendadas
+
+- Memória ativa;
+- Sínteses de sessões;
+- Global e transversal;
+- Por agente ou ferramenta;
+- Precisa revisar;
+- Sem fonte;
+- Projeto de origem, apenas para rastreabilidade.
+
+Não use `Por projeto` como view central.
 
 ## 3. Decisões
 
-Decisões transversais ou editoriais que precisam de rastreabilidade.
+### Função
 
-### Propriedades recomendadas
+Registrar decisões transversais ou editoriais com rastreabilidade.
 
 | Propriedade | Tipo sugerido | Uso |
 |---|---|---|
 | Decisão | Title | título curto |
 | Estado | Select | Proposta, Aprovada, Rejeitada, Substituída, Arquivada |
-| Escopo | Select | Organização, Projeto, Produto, Arquitetura, Editorial |
-| Responsável | Person/Text | decisor ou mantenedor |
+| Escopo | Select | Global, Projeto, Produto, Arquitetura, Editorial |
+| Responsável | Person/Text | decisor |
 | Data | Date | data da decisão |
-| Projetos | Relation | projetos afetados |
-| Markdown relacionado | Relation/URL | registro consolidado na Biblioteca |
-| Substitui | Relation | decisão anterior |
-| Artefato operacional | URL | ADR, issue ou PR no GitHub |
-| Revisar em | Date | data para reavaliação |
+| Projetos | Relation | projetos afetados, quando houver |
+| Artefato operacional | URL | ADR, issue ou PR |
+| Revisar em | Date | reavaliação |
+| Memória relacionada | Relation | opcional, apenas se houver valor entre sessões |
 
-### Conteúdo da página
-
-- contexto;
-- problema;
-- alternativas;
-- decisão;
-- consequências;
-- artefato operacional;
-- Markdown consolidado;
-- critérios de revisão.
-
-Decisões aprovadas e reutilizáveis devem gerar ou atualizar um Markdown na Biblioteca.
+Uma decisão específica de projeto não precisa virar memória global.
 
 ## 4. Fontes
-
-Catálogo de documentos, páginas, livros, vídeos, normas, repositórios e outras origens.
-
-### Propriedades recomendadas
 
 | Propriedade | Tipo sugerido | Uso |
 |---|---|---|
@@ -166,77 +149,62 @@ Catálogo de documentos, páginas, livros, vídeos, normas, repositórios e outr
 | Autor/Origem | Text | autor ou organização |
 | Confiabilidade | Select | Primária, Secundária, Contextual, Não verificada |
 | Estado | Select | Ativa, Indisponível, Substituída, Arquivada |
-| Markdowns | Relation/URL | memórias que usam a fonte |
 | Projetos | Relation | projetos relacionados |
 | Consultada em | Date | última consulta |
-| Observações | Text | limitações e escopo |
+| Observações | Text | limites e escopo |
 
-## Componentes que podem começar sem banco próprio
+## 5. Registro de sessões
 
-### 01 — Conhecimento
+Pode ser uma página ou banco cronológico opcional.
 
-Pode usar páginas, fontes e views da Biblioteca. Crie um banco separado somente quando houver volume e processo editorial que não possam ser atendidos pela Biblioteca.
+Campos úteis:
 
-### Registro de atividades
+- data;
+- ferramenta ou modelo;
+- objetivo;
+- projeto relacionado, quando houver;
+- links;
+- resultado;
+- próxima ação;
+- memória consolidada, quando houver.
 
-Pode permanecer como página ou banco cronológico opcional. Não substitui a Biblioteca e não precisa duplicar seu schema.
+O registro de sessão não substitui a Biblioteca. A Biblioteca recebe somente a síntese selecionada.
 
-### Sistema de Agentes
-
-Pode usar páginas de navegação e views da Biblioteca filtradas por agentes e tipo. Skills e políticas continuam canônicas no GitHub.
-
-### Laboratório
-
-Pode começar com páginas e views da Biblioteca em Inbox ou Rascunho. Crie banco próprio somente quando experimentos exigirem propriedades e ciclo específicos.
-
-## Bancos opcionais
-
-### Publicações
-
-Crie quando o fluxo Cérebro → GitHub se tornar recorrente. Registre origem, destino, versão, hash ou commit, aprovação e estado.
-
-### Agentes
-
-Crie quando houver volume suficiente para relações, permissões e responsáveis que não possam ser mantidos em páginas simples.
-
-## Relações essenciais
+## Relações recomendadas
 
 ```text
-Projetos ↔ Biblioteca de Markdowns
 Projetos ↔ Decisões
 Projetos ↔ Fontes
-Decisões ↔ Biblioteca de Markdowns
-Fontes ↔ Biblioteca de Markdowns
+Biblioteca ↔ Agentes/Ferramentas
+Biblioteca ↔ Projeto de origem (opcional)
+Biblioteca ↔ Decisão global (opcional)
 ```
 
-Evite relações sem uso real. Toda relação deve responder a uma pergunta concreta.
+Evite tornar `Projetos ↔ Biblioteca` uma relação obrigatória.
 
-## Template de Markdown operacional
+## Template de memória
 
-- resumo;
-- quando consultar;
-- contexto;
-- processo, decisão ou aprendizado;
-- entradas;
-- passos ou regras;
-- validação;
-- resultado esperado;
-- riscos e limites;
-- origem verificável;
-- projetos e agentes;
-- histórico de versões.
-
-Consulte `MARKDOWN-LIBRARY-MEMORY.md` para templates de incidente e decisão.
+```text
+Resumo
+Quando consultar
+Escopo
+Sessão ou fonte de origem
+Memória consolidada
+Como aplicar
+Limites
+Agentes ou ferramentas
+Projeto de origem opcional
+Histórico de versões
+```
 
 ## Regras de qualidade
 
-- mantenha uma única Biblioteca canônica;
-- não use texto livre para dados filtrados com frequência;
-- não crie relação sem view ou processo que a utilize;
-- mantenha estados pequenos e definidos;
-- documentos ativos precisam de origem, escopo, versão e revisão;
-- use arquivamento em vez de exclusão automática;
-- mudanças de schema exigem revisão;
-- revise propriedades e views após os pilotos;
-- use apenas exemplos fictícios em documentação pública;
-- nunca publique opções reais, IDs ou linhas de um workspace privado.
+- projetos vivem no banco Projetos;
+- a Biblioteca guarda sínteses globais ou entre sessões;
+- documentação específica permanece no GitHub;
+- estado temporário permanece em issue, PR ou handoff;
+- relações opcionais indicam origem, não propriedade;
+- toda memória ativa possui escopo, origem e revisão;
+- agentes não promovem conteúdo sem revisão humana;
+- exemplos públicos são fictícios;
+- segredos nunca entram no Cérebro.

@@ -2,288 +2,241 @@
 
 ## Princípio
 
-O Cérebro é o plano editorial, de conhecimento e de memória durável do ecossistema. Ele organiza contexto humano, pesquisa, curadoria, decisões transversais, registros reutilizáveis e navegação entre projetos.
+O Cérebro organiza contexto humano e agentic-first sem misturar entidades, documentação operacional e memória de sessões.
 
-Não é banco operacional, repositório de código, secret manager nem substituto do GitHub.
+A regra central é:
 
-Este documento ensina uma estrutura genérica. Cada pessoa ou equipe deve criar o próprio workspace e preencher os exemplos com seus dados privados.
+```text
+projetos vivem em Projetos
+operação específica vive no GitHub
+estado temporário vive em issues, PRs e handoffs
+memória reutilizável vive na Biblioteca de Markdowns
+```
 
 ## Estrutura recomendada
-
-A **Biblioteca de Markdowns** é o banco canônico de memória. As áreas `01` a `05` usam views vinculadas e filtros desse mesmo banco; não criam cópias independentes dos documentos.
 
 ```text
 Cérebro
 ├── START HERE
-├── Biblioteca de Markdowns
 ├── 01 — Conhecimento
 │   ├── Formação e estudos
-│   ├── Pesquisas em andamento
+│   ├── Pesquisas
 │   ├── Referências e fontes
-│   ├── Sínteses aprovadas
-│   └── View da Biblioteca: pesquisas, manuais e conhecimento liberado
+│   └── Sínteses e glossários
 ├── 02 — Projetos e Produtos
+│   ├── Banco Projetos
 │   ├── Projetos ativos
-│   ├── Projetos em incubação
-│   ├── Projetos em manutenção
-│   ├── Projetos arquivados
-│   └── Páginas de projeto com views filtradas da Biblioteca
+│   ├── Incubação
+│   ├── Manutenção
+│   └── Arquivados
 ├── 03 — Sistema de Agentes
-│   ├── Registro de agentes e ferramentas
-│   ├── Registro de repositórios agentic-first
-│   ├── Catálogo de skills
-│   ├── Políticas globais
-│   ├── Prompts e templates
-│   ├── Fontes canônicas
-│   ├── Compatibilidade e integrações MCP
-│   └── View da Biblioteca: skills, políticas, prompts e manuais
+│   ├── Agentes e ferramentas
+│   ├── Permissões e limites
+│   ├── Skills, políticas e prompts
+│   └── Integrações MCP
 ├── 04 — Operação e Governança
-│   ├── Registro de atividades ou sessões
-│   ├── Decisões
-│   ├── Processos e runbooks
-│   ├── Incidentes e aprendizados
-│   ├── Publicações Cérebro → GitHub
-│   ├── Revisões periódicas
-│   ├── Responsáveis e permissões
-│   └── View da Biblioteca: operação, decisões e itens a revisar
-└── 05 — Laboratório
-    ├── Hipóteses
-    ├── Experimentos
-    ├── Protótipos
-    ├── Integrações futuras
-    ├── Testes de RAG, modelos e automações
-    └── View da Biblioteca: Inbox e Rascunhos experimentais
+│   ├── Decisões transversais
+│   ├── Revisões
+│   ├── Publicações
+│   └── Registro opcional de sessões
+├── 05 — Laboratório
+│   ├── Hipóteses
+│   ├── Experimentos
+│   └── Protótipos
+└── Biblioteca de Markdowns
+    ├── Memória ativa
+    ├── Sínteses de sessões
+    ├── Memória transversal
+    ├── Por agente ou ferramenta
+    └── Revisar
 ```
-
-## Biblioteca de Markdowns
-
-A Biblioteca é a memória durável utilizada por humanos, agentes, automações e futuras camadas de RAG.
-
-Ela deve permanecer única. As cinco áreas apresentam views filtradas por projeto, agente, tipo, tags e status.
-
-Documentos liberados para operação usam o estado definido pelo usuário para conteúdo aprovado, por exemplo `Ativo`. Itens em captura, rascunho ou revisão não devem ser aplicados automaticamente.
-
-Consulte `MARKDOWN-LIBRARY-MEMORY.md` para os gatilhos de registro e o ciclo editorial.
 
 ## START HERE
 
-É a entrada obrigatória. Explica onde cada tipo de informação vive, apresenta as views principais, aponta fontes canônicas e impede navegação por tentativa e erro.
+A entrada do Cérebro deve explicar:
 
-Também aponta para a Biblioteca de Markdowns e explica que ações e processos relevantes podem produzir memória durável.
+- onde os projetos são registrados;
+- quando seguir para o GitHub;
+- quando consultar a Biblioteca;
+- onde ficam estado temporário e decisões;
+- quais conteúdos não devem ser duplicados.
 
 ## 01 — Conhecimento
 
 ### Finalidade
 
-Organizar conteúdo que ajuda a compreender assuntos, domínios e problemas, independentemente da execução imediata de um projeto.
+Organizar conteúdo editorial usado para compreender domínios e problemas.
 
-### Conteúdo esperado
+### Conteúdo
 
-- formação e estudos;
-- pesquisas em andamento;
-- estudos técnicos e conceituais;
-- referências externas;
-- sínteses aprovadas;
-- glossários e vocabulários;
-- documentação temática;
-- conhecimento de domínio necessário aos projetos.
+- estudos;
+- pesquisas;
+- fontes;
+- sínteses;
+- glossários;
+- conhecimento de domínio.
 
-### Views recomendadas
-
-- `Conhecimento liberado` — itens aprovados dos tipos Pesquisa, Manual ou Aprendizado;
-- `Em revisão` — rascunhos e itens que precisam de validação;
-- `Por domínio` — agrupada por Tags;
-- `Por projeto` — filtrada por Projetos;
-- `Formação` — conteúdo acadêmico ou profissional separado da memória operacional.
-
-### Não pertence aqui
-
-- código;
-- comandos operacionais voláteis;
-- estado atual de branch ou PR;
-- logs de execução;
-- regras de agentes ainda não aprovadas.
+Conhecimento pode se relacionar com projetos, mas não deve ser tratado como memória de sessão apenas por ter sido usado em um projeto.
 
 ## 02 — Projetos e Produtos
 
 ### Finalidade
 
-Ser o catálogo transversal dos produtos, sistemas, estudos aplicados e repositórios.
+Ser o catálogo canônico dos projetos e produtos.
 
-### Conteúdo esperado
-
-- registro de cada projeto;
-- finalidade, público e resultado esperado;
-- estado: incubação, ativo, manutenção, pausado ou arquivado;
-- responsável humano;
-- GitHub canônico;
-- `START-HERE.md` do repositório;
-- arquitetura e documentação canônica;
-- ambiente de demonstração ou produção;
-- nível de acesso permitido aos agentes;
-- relações com conhecimento, decisões e fontes;
-- view da Biblioteca filtrada pelo projeto.
-
-### Estrutura mínima da página de projeto
+### Registro mínimo
 
 ```text
-Resumo
+Nome
+Slug
 Estado
+Tipo
+Finalidade
+Público ou usuários
+Resultado esperado
 Responsável
-Repositório canônico
-START HERE do repositório
+Stack resumida
+Repositório
+START HERE
 Arquitetura
 Ambientes
-Acesso permitido aos agentes
-Decisões relevantes
-Conhecimento relacionado
-Memória do projeto
+Acesso de agentes
+Decisões relacionadas
+Fontes relacionadas
 Última revisão
-```
-
-### Exemplo público
-
-```text
-Projeto: Produto Alpha
-Repositório: example-org/product-alpha
-Agentes: Agente de Código, Agente de Operações
-Ambiente: https://example.com
 ```
 
 ### Regra
 
-O Cérebro mostra mapa, contexto e relações. Código, testes, deploy, runbooks técnicos e estado operacional detalhado permanecem no GitHub. A página usa links e views da Biblioteca, não cópias manuais.
+A página do projeto deve ser suficiente para encontrar seu contexto e seguir para suas fontes canônicas.
+
+Ela não depende da Biblioteca de Markdowns e não precisa possuir uma view da Biblioteca.
+
+### Contexto específico
+
+- código, arquitetura, testes e deploy → GitHub;
+- pendências e mudanças → issues e PRs;
+- continuidade → `HANDOFF.md`;
+- decisões do projeto → página de projeto, ADR ou GitHub;
+- conhecimento relacionado → área 01 ou banco de Fontes.
 
 ## 03 — Sistema de Agentes
 
 ### Finalidade
 
-Organizar como agentes, modelos e ferramentas trabalham nos projetos.
+Organizar agentes, modelos, ferramentas e integrações.
 
-### Conteúdo esperado
+### Conteúdo
 
-- registro de agentes e ferramentas;
-- responsabilidades e limites de cada agente;
-- repositórios preparados pelo Agent OS;
-- catálogo editorial de skills;
-- políticas globais;
-- prompts e templates aprovados;
-- compatibilidade entre ferramentas;
-- integrações MCP;
-- fontes canônicas e permissões.
+- responsabilidades;
+- permissões;
+- limites;
+- compatibilidade;
+- MCPs;
+- catálogo de skills, políticas e prompts;
+- links para implementações canônicas.
 
-### Exemplos neutros
-
-- Agente de Código;
-- Agente de Pesquisa;
-- Agente de Operações;
-- Agente de Suporte;
-- Orquestrador de Workflows.
-
-A implementação canônica de skills, políticas e templates compartilhados continua no GitHub do Agent OS.
+Memórias sobre comportamento recorrente de agentes podem ir para a Biblioteca quando forem globais ou úteis em sessões futuras.
 
 ## 04 — Operação e Governança
 
 ### Finalidade
 
-Organizar como o sistema é mantido, revisado e evoluído com rastreabilidade.
+Organizar manutenção e evolução do sistema.
 
-### Conteúdo esperado
+### Conteúdo
 
-- registro cronológico opcional de atividades ou sessões;
 - decisões transversais;
-- processos e runbooks;
-- incidentes, causas, correções e prevenção;
-- procedimentos consolidados de deploy, rollback, backup e recuperação;
-- integrações implantadas;
-- publicações do Cérebro para GitHub;
-- ciclos de revisão;
-- responsáveis, papéis e permissões;
-- itens que precisam de atualização.
+- revisões periódicas;
+- responsáveis e permissões;
+- publicação Cérebro → GitHub;
+- regras de retenção;
+- registro cronológico opcional de sessões.
 
-### Diferença entre registro cronológico e memória
+### Sessão versus memória
 
-- **Registro de atividades:** relata o que aconteceu em ordem temporal.
-- **Biblioteca de Markdowns:** consolida conhecimento temático, curado e reutilizável.
+- **Registro de sessão:** sequência cronológica do que ocorreu.
+- **Biblioteca:** síntese selecionada e reutilizável.
 
-Quando uma sessão revelar um processo ou aprendizado durável, ele deve ser consolidado na Biblioteca.
+Uma sessão não deve ser copiada integralmente para a Biblioteca.
 
 ## 05 — Laboratório
 
 ### Finalidade
 
-Separar exploração de conhecimento aprovado e operação ativa.
+Separar exploração de conteúdo aprovado.
 
-### Conteúdo esperado
+Depois de um experimento, classifique o resultado:
 
-- hipóteses;
-- experimentos;
-- protótipos;
-- testes de modelos, RAG e embeddings;
-- propostas de schema;
-- integrações futuras;
-- automações em validação;
-- rascunhos de skills, políticas e processos.
+| Resultado | Destino |
+|---|---|
+| Implementação de um projeto | GitHub do projeto |
+| Novo projeto ou produto | Banco Projetos |
+| Conhecimento editorial | Área 01 |
+| Memória global ou transversal | Biblioteca |
+| Skill ou política compartilhada | Agent OS |
 
-Itens desta área não orientam operação automaticamente. Depois de evidência e revisão, podem ser promovidos para uso ativo.
+## Biblioteca de Markdowns
 
-## Modelo de navegação
+### Finalidade
 
-A navegação deve começar por views orientadas a intenção:
+Ser um repositório de memória durável para agentes e sessões futuras.
 
-- `Começar um projeto`;
-- `Retomar projeto ativo`;
-- `Encontrar conhecimento liberado`;
-- `Revisar decisões pendentes`;
-- `Publicar no GitHub`;
-- `Consultar skills e políticas`;
-- `Revisar memória desatualizada`.
+### O que registra
 
-Evite uma home composta apenas por dezenas de links sem contexto.
+- sínteses relevantes de conversas ou sessões;
+- decisões globais;
+- preferências operacionais estáveis;
+- aprendizados transversais;
+- padrões recorrentes entre projetos;
+- contexto sobre agentes, ferramentas e integrações;
+- regras agentic-first que não pertencem a um único projeto.
+
+### O que não registra
+
+- projetos;
+- cadastro de produtos;
+- documentação técnica completa de um projeto;
+- estado atual de uma tarefa;
+- conteúdo integral de issues e PRs;
+- logs;
+- transcrições completas;
+- segredos.
+
+### Projeto de origem
+
+Uma memória pode possuir uma relação opcional com um projeto para indicar onde foi descoberta. Essa relação não torna o projeto dependente da Biblioteca.
 
 ## Camadas de contexto
 
-1. **Entrada:** START HERE do Cérebro.
-2. **Orientação:** registro do projeto.
-3. **Memória:** Markdowns liberados e diretamente relacionados.
-4. **Conhecimento:** decisões e pesquisas relacionadas.
-5. **Operação:** GitHub e START HERE do repositório.
-6. **Estado temporário:** issue, branch, PR e handoff.
+1. `START HERE` do Cérebro.
+2. Registro do projeto, quando houver projeto.
+3. Conhecimento, decisões e fontes relacionadas.
+4. GitHub e `START HERE` do repositório.
+5. Issue, branch, PR e handoff atuais.
+6. Biblioteca apenas quando memória global ou de sessão for útil.
 
-Essa ordem reduz contexto excessivo e mantém a informação próxima de sua fonte correta.
+A Biblioteca não deve ser consultada automaticamente em toda tarefa.
 
-## O que não deve ser duplicado no Cérebro
+## Matriz de classificação
 
-- código-fonte;
-- arquivos completos de configuração;
-- comandos que mudam frequentemente;
-- runbooks extensos de deploy já versionados;
-- conteúdo integral de issues e pull requests;
-- logs de execução;
-- credenciais;
-- cópias manuais de políticas e skills canônicas;
-- nomes, IDs, URLs ou registros de outro workspace usados como exemplo público.
+| Pergunta | Destino |
+|---|---|
+| Isso define ou descreve um projeto? | Projetos e Produtos |
+| É implementação específica? | GitHub |
+| É estado temporário? | Issue, PR ou handoff |
+| É conhecimento editorial? | Conhecimento |
+| É uma decisão transversal? | Governança/Decisões |
+| Precisa sobreviver a sessões e orientar agentes globalmente? | Biblioteca |
+| Ainda é hipótese? | Laboratório |
 
-Use links, relações, resumos aprovados e metadados de origem.
+## Não duplicar
 
-## Evolução do workspace
+- projetos na Biblioteca;
+- código no Notion;
+- handoffs na Biblioteca;
+- runbooks específicos já versionados;
+- transcrições de sessões;
+- dados privados em exemplos públicos.
 
-Comece com poucos bancos e views. Adicione novos componentes somente quando houver:
-
-- volume recorrente;
-- responsável definido;
-- necessidade real de relações ou filtros;
-- regra de arquivamento;
-- fonte canônica inequívoca.
-
-A arquitetura deve crescer a partir do uso, não da tentativa de prever todos os cenários.
-
-## Sanitização para compartilhamento
-
-Antes de exportar templates, capturas ou exemplos:
-
-1. substitua nomes reais por placeholders;
-2. remova URLs e IDs privados;
-3. remova clientes, produtos e agentes internos;
-4. confirme que nenhum conteúdo da Biblioteca foi copiado;
-5. revise `docs/governance/PUBLIC-SANITIZATION.md`.
+Use relações e links para conectar as estruturas sem fundi-las.

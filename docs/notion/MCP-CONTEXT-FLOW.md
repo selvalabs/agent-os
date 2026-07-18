@@ -2,212 +2,147 @@
 
 ## Objetivo
 
-Permitir que agentes consultem um Cérebro editorial e uma Biblioteca de Markdowns sem receber o workspace inteiro, sem tratar rascunhos como verdade e sem escrever fora do escopo autorizado.
+Permitir que agentes consultem o Cérebro sem carregar tudo e sem confundir projetos com memória global.
 
-Este documento usa somente exemplos fictícios. Cada usuário configura seus próprios projetos, agentes, páginas e permissões.
+Toda integração começa em **somente leitura**.
 
-## Modo padrão
-
-Toda integração externa começa em **somente leitura**.
-
-Escrita exige:
-
-1. intenção explícita do humano;
-2. página ou banco de destino identificado;
-3. campos que serão alterados;
-4. conteúdo proposto visível ou revisável;
-5. fontes utilizadas;
-6. ausência de movimentação ou exclusão destrutiva não solicitada.
-
-## Fluxo de leitura
+## Ordem de consulta
 
 ```text
 pedido atual
-→ identificar projeto, agente ou domínio
-→ abrir Cérebro / START HERE
-→ abrir registro do projeto
-→ consultar Biblioteca por Projeto + Agente + Tags + Tipo
-→ filtrar conteúdo liberado
-→ conferir origem, versão e última revisão
-→ recuperar somente Markdowns relevantes
-→ consultar decisões e fontes aplicáveis
-→ seguir para o GitHub quando a informação for operacional
+→ identificar se há projeto
+→ abrir START HERE do Cérebro
+→ abrir registro do projeto, quando aplicável
+→ seguir para GitHub e START HERE do repositório
+→ consultar conhecimento, decisões e fontes necessárias
+→ consultar Biblioteca somente se houver memória global ou de sessão relevante
+→ executar
 ```
 
-## Pacote mínimo de contexto
+A Biblioteca não é etapa obrigatória de toda tarefa.
 
-Para tarefa de código, o contexto ideal contém:
+## Contexto de projeto
 
-- identificação do projeto;
-- propósito e estado;
-- URL do repositório;
-- START HERE do repositório;
-- Markdowns liberados diretamente relacionados;
-- decisões relevantes;
-- restrições de acesso;
-- issue, branch, PR ou handoff atual.
+Para uma tarefa ligada a um projeto, recupere:
 
-Não inclua automaticamente:
+- nome e finalidade;
+- estado e responsável;
+- repositório;
+- START HERE;
+- arquitetura;
+- ambientes;
+- acesso permitido aos agentes;
+- decisões e fontes relacionadas;
+- issue, PR ou handoff atual.
 
-- todas as páginas do projeto;
+Esses dados vêm do banco Projetos e do GitHub, não da Biblioteca.
+
+## Contexto da Biblioteca
+
+Consulte a Biblioteca quando precisar de:
+
+- síntese de sessão anterior;
+- preferência operacional estável;
+- regra global de uso agentic-first;
+- aprendizado transversal;
+- contexto recorrente sobre agente ou ferramenta;
+- padrão identificado em diferentes projetos;
+- decisão global necessária para interpretar a tarefa.
+
+## Filtros recomendados
+
+Use filtros como:
+
+- Status = Ativo;
+- Escopo = Global ou Transversal;
+- Agente/Ferramenta = agente atual;
+- Tipo = Síntese de sessão;
+- Tags = tema relevante;
+- Última revisão dentro do prazo.
+
+`Projeto de origem` pode ajudar na rastreabilidade, mas não deve ser o filtro padrão nem substituir o registro do projeto.
+
+## Não carregar automaticamente
+
+- todo o banco Projetos;
 - toda a Biblioteca;
-- documentos de outros agentes ou projetos sem dependência;
-- Inbox, Rascunho ou Revisar como regra;
+- páginas de outros projetos;
+- rascunhos como regras;
 - logs antigos;
-- conteúdo duplicado do GitHub;
-- páginas, IDs ou URLs de outros workspaces.
+- transcrições completas;
+- documentação duplicada do GitHub;
+- conteúdo privado em exemplos públicos.
 
-## Regras de confiança
+## Confiança da memória
 
-Adapte os nomes dos estados, mantendo significados inequívocos:
+Antes de usar um Markdown:
 
-- **Liberado:** pode orientar a tarefa dentro do escopo indicado;
-- **Rascunho:** contexto em construção, não regra aprovada;
-- **Inbox:** captura sem triagem;
-- **Revisar:** conteúdo potencialmente desatualizado ou conflitante;
-- **Arquivado:** histórico, fora dos fluxos ativos.
+1. confirme o status ativo;
+2. verifique o escopo;
+3. confirme agente ou ferramenta aplicável;
+4. confira origem e revisão;
+5. verifique conflito com GitHub, projeto ou política canônica;
+6. confirme que o conteúdo ainda é global ou transversal.
 
-Antes de usar um item liberado, confira:
+Fontes específicas do projeto prevalecem para operação daquele projeto.
 
-- projeto;
-- agente ou ferramenta;
-- tipo e tags;
-- fonte ou GitHub;
-- versão;
-- última revisão;
-- notas e limitações.
+## Retorno de contexto
 
-Quando houver conflito:
-
-1. identifique as fontes;
-2. verifique a hierarquia canônica;
-3. registre o conflito;
-4. solicite decisão humana quando a precedência não estiver definida.
-
-## Estratégia por camadas
-
-### Camada 1 — Entrada
-
-Leia START HERE e identifique a rota correta.
-
-### Camada 2 — Projeto e agente
-
-Leia registro do projeto, agente aplicável e links canônicos.
-
-### Camada 3 — Memória
-
-Busque Markdowns usando filtros específicos. Não faça dump da Biblioteca.
-
-Exemplos fictícios:
-
-- Projeto = Produto Alpha e Tags = segurança + api;
-- Agente = Agente de Código e Tipo = Processo;
-- Projeto = Projeto Exemplo e Status = Ativo;
-- Tipo = Incidente e Tags = deploy;
-- Status = Revisar e Prioridade = Alta.
-
-### Camada 4 — Operação
-
-Use GitHub, issue, PR, código e handoff. O Cérebro deixa de ser fonte principal nessa etapa.
-
-### Camada 5 — Retorno de memória
-
-Depois da execução, avalie se o resultado precisa sobreviver à sessão.
+Depois da execução:
 
 ```text
 resultado validado
-→ gatilho de memória?
-   não → encerrar com evidência
-   sim → localizar Markdown existente
-       → atualizar ou criar Rascunho
-       → preencher origem e metadados
-       → solicitar revisão humana
-       → liberar após aprovação
+→ classificar destino
+   projeto → banco Projetos
+   documentação específica → GitHub
+   estado temporário → issue, PR ou HANDOFF
+   conhecimento → área 01
+   memória global/transversal → Biblioteca
 ```
-
-## Gatilhos de escrita na Biblioteca
-
-Há gatilho quando a ação produz:
-
-- processo reutilizável;
-- decisão importante;
-- incidente e solução validada;
-- integração ou configuração relevante;
-- runbook de deploy, rollback, backup ou recuperação;
-- diagnóstico não trivial;
-- regra de segurança;
-- aprendizado que evita erro ou retrabalho;
-- mudança permanente de operação.
-
-A ausência de gatilho não autoriza criar registro apenas para marcar atividade.
 
 ## Escrita permitida com autorização
 
-- criar Markdown em Inbox ou Rascunho;
-- atualizar documento existente com nova versão;
-- adicionar projeto, agente, tipo, tags e prioridade;
-- registrar fonte, GitHub, issue, PR, commit ou arquivo;
-- atualizar hash depois de publicação ou indexação;
-- alterar para Revisar quando houver dúvida ou envelhecimento;
-- atualizar última revisão depois de revisão humana;
-- promover para uso somente após aprovação explícita.
+### Projetos
+
+- criar ou atualizar registro do projeto;
+- atualizar estado, responsável e links;
+- relacionar decisões e fontes;
+- registrar última revisão.
+
+### Biblioteca
+
+- criar síntese em Inbox ou Rascunho;
+- atualizar memória existente;
+- preencher escopo, agente, tags e origem;
+- adicionar projeto de origem opcional;
+- promover somente depois de revisão humana.
 
 ## Escrita não permitida por padrão
 
 - mover ou apagar páginas;
-- promover conteúdo sem revisão humana;
-- substituir decisão existente silenciosamente;
-- sobrescrever Markdown extenso sem mostrar a proposta;
-- criar duplicata sem buscar item existente;
-- copiar documentação operacional inteira do GitHub;
-- alterar propriedades ou opções do schema;
-- alterar permissões do workspace;
-- criar automação bidirecional;
-- inserir credenciais ou segredos;
-- copiar conteúdo privado para exemplos públicos.
+- transformar documentação de projeto em memória global;
+- cadastrar projeto dentro da Biblioteca;
+- promover Rascunho sem revisão;
+- copiar conteúdo integral do GitHub;
+- alterar schema ou permissões;
+- criar sincronização bidirecional;
+- inserir segredos.
 
-## Procedimento para criar memória
+## Procedimento de memória
 
-1. busque por slug, título, projeto e tags para evitar duplicata;
-2. escolha criar ou atualizar;
-3. escreva resumo curto e estrutura reutilizável;
-4. preencha documento, slug, status, tipo, formato, projetos, agentes, tags e prioridade;
-5. adicione fonte ou GitHub;
-6. defina versão e notas;
-7. mantenha Rascunho até revisão;
-8. informe claramente o que foi registrado.
+1. confirme que a informação precisa sobreviver a sessões;
+2. confirme que não existe destino canônico mais específico;
+3. busque memória existente;
+4. escreva uma síntese;
+5. preencha escopo e origem;
+6. use projeto apenas como origem opcional;
+7. mantenha Rascunho até revisão.
 
-## Consultas recomendadas
+## Falhas
 
-- projeto X + Markdowns liberados de arquitetura;
-- projeto X + incidentes de deploy;
-- agente Y + processos de operação;
-- projeto X + decisões e fontes relacionadas;
-- itens Revisar de alta prioridade;
-- Markdowns sem origem ou revisão.
+Se Notion ou MCP estiver indisponível:
 
-Evite consultas abertas como “traga tudo sobre a organização” ou “carregue todo o Cérebro”.
-
-## Rastreabilidade
-
-Quando conteúdo do Cérebro influenciar mudança operacional, registre quando aplicável:
-
-- Markdown ou ID local;
-- estado;
-- versão e última revisão;
-- projeto e agente;
-- issue ou PR resultante;
-- commit ou versão publicada;
-- hash na camada derivada.
-
-Em documentação pública, use somente placeholders. Não publique IDs, URLs ou nomes reais do workspace.
-
-## Falhas e indisponibilidade
-
-Se o Cérebro ou MCP estiver indisponível:
-
-- não invente contexto ausente;
-- continue somente com fontes canônicas disponíveis;
-- registre a limitação no handoff ou PR;
-- não copie conteúdo para locais incorretos como solução silenciosa;
-- se houve gatilho de memória, registre pendência em issue para write-back posterior.
+- não invente contexto;
+- use as fontes canônicas disponíveis;
+- registre a limitação na issue, PR ou handoff;
+- deixe pendência de write-back apenas quando houver memória global real.

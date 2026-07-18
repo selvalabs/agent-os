@@ -1,94 +1,91 @@
 # SelvaLabs Agent OS
 
-Base reutilizável para preparar novos repositórios para construção e manutenção **agentic-first**, sem transformar `README.md` ou `AGENTS.md` em documentação extensa de máquina.
-
-O Agent OS reúne políticas, skills, templates, bootstrap, validações, handoffs e regras de segurança compartilhadas para operar múltiplos projetos com agentes de forma auditável e reversível.
+Base reutilizável para preparar repositórios e workspaces **agentic-first** com navegação clara, contexto seletivo, políticas, skills, bootstrap seguro e validação em CI.
 
 ## Comece aqui
 
 - [`START-HERE.md`](START-HERE.md) — rota mínima para humanos e agentes;
 - [`docs/notion/START-HERE.md`](docs/notion/START-HERE.md) — implementação de um Cérebro próprio;
-- [`docs/notion/NOTION-BRAIN-ARCHITECTURE.md`](docs/notion/NOTION-BRAIN-ARCHITECTURE.md) — conteúdo recomendado das áreas `01` a `05`;
-- [`docs/notion/MARKDOWN-LIBRARY-MEMORY.md`](docs/notion/MARKDOWN-LIBRARY-MEMORY.md) — memória durável e write-back;
-- [`docs/governance/PUBLIC-SANITIZATION.md`](docs/governance/PUBLIC-SANITIZATION.md) — proteção contra exposição de workspaces reais;
-- [`templates/repository/START-HERE.md`](templates/repository/START-HERE.md) — entrada incluída em novos repositórios.
+- [`docs/notion/NOTION-BRAIN-ARCHITECTURE.md`](docs/notion/NOTION-BRAIN-ARCHITECTURE.md) — conteúdo das áreas `01` a `05`;
+- [`docs/notion/MARKDOWN-LIBRARY-MEMORY.md`](docs/notion/MARKDOWN-LIBRARY-MEMORY.md) — memória global, transversal e de sessões;
+- [`docs/notion/DATABASE-SCHEMAS.md`](docs/notion/DATABASE-SCHEMAS.md) — schemas recomendados;
+- [`docs/governance/PUBLIC-SANITIZATION.md`](docs/governance/PUBLIC-SANITIZATION.md) — proteção contra exposição de contexto privado.
 
-**Regra:** todo novo repositório e toda raiz de conhecimento preparada pelo Agent OS deve possuir um `START HERE` curto, visível e atualizado.
+## Separação fundamental
 
-## Objetivo
+O Agent OS distingue quatro tipos de contexto:
 
-Separar cinco responsabilidades:
+| Contexto | Fonte canônica |
+|---|---|
+| Projeto, produto, responsáveis, estado e links | `02 — Projetos e Produtos` no Cérebro |
+| Código, arquitetura, testes, deploy e operação específica | GitHub do projeto |
+| Issue, branch, PR, pendências e continuidade | GitHub e `HANDOFF.md` |
+| Memória global, transversal ou necessária entre sessões | Biblioteca de Markdowns |
 
-1. **Cérebro editorial** — conhecimento, curadoria, pesquisa, memória durável e governança;
-2. **Repositório do projeto** — código, arquitetura, testes e verdade operacional;
-3. **Agent OS** — políticas, skills, templates e validações compartilhadas;
-4. **Camada derivada** — busca, índices, embeddings, RAG e rastreabilidade;
-5. **Enforcement técnico** — CI, hooks, permissões, sandbox e revisão humana.
+A **Biblioteca de Markdowns não é um catálogo de projetos** e não substitui a página própria de cada projeto.
 
-## Crie o seu próprio Cérebro
+## Cérebro editorial
 
-Este repositório não contém o workspace pessoal de nenhum mantenedor. Ele ensina um modelo adaptável para que cada pessoa ou equipe crie a própria estrutura.
-
-A documentação cobre:
-
-- START HERE e navegação seletiva;
-- áreas `01` a `05`;
-- Biblioteca de Markdowns;
-- schemas e views recomendados;
-- consulta por MCP em modo de leitura inicial;
-- governança e publicação para GitHub;
-- memory write-back depois de processos relevantes.
-
-O pacote em `docs/notion-import/` contém páginas genéricas e placeholders. Substitua os exemplos antes de usar.
-
-## Biblioteca de Markdowns
-
-A arquitetura recomenda que o usuário crie uma **Biblioteca de Markdowns** como memória durável e curada.
-
-Ela pode registrar processos reutilizáveis, decisões, políticas, integrações, runbooks, incidentes resolvidos, pesquisas, templates e aprendizados relevantes.
-
-```text
-trabalho relevante
-→ validação
-→ issue, PR, commit ou resultado verificável
-→ avaliação de memória
-→ criar ou atualizar Markdown
-→ revisão humana
-→ status liberado para uso
-```
-
-As áreas do Cérebro devem usar views vinculadas da mesma biblioteca, evitando bancos paralelos e cópias manuais.
-
-## Estrutura recomendada do Cérebro
+A estrutura recomendada é:
 
 ```text
 Cérebro
 ├── START HERE
-├── Biblioteca de Markdowns
 ├── 01 — Conhecimento
-│   estudos, pesquisas, fontes, sínteses e conhecimento de domínio
 ├── 02 — Projetos e Produtos
-│   catálogo, responsáveis, repositórios e memória por projeto
+│   └── Banco Projetos
 ├── 03 — Sistema de Agentes
-│   agentes, skills, políticas, prompts, templates e integrações
 ├── 04 — Operação e Governança
-│   decisões, processos, incidentes, publicações e revisões
-└── 05 — Laboratório
-    hipóteses, experimentos, protótipos e rascunhos
+├── 05 — Laboratório
+└── Biblioteca de Markdowns
 ```
 
-Consulte `docs/notion/NOTION-BRAIN-ARCHITECTURE.md` para a composição completa.
+### Projetos e Produtos
 
-## Princípio central
+Cada projeto possui registro próprio com finalidade, estado, responsável, repositório, START HERE, arquitetura, ambientes, acessos, decisões e fontes relacionadas.
 
-Documentação que orienta agentes não substitui controles técnicos. Regras críticas também devem ser protegidas por permissões, CI, hooks, sandbox e revisão humana.
+O projeto não deve ser montado dentro da Biblioteca. Seu contexto específico permanece na página do projeto e no GitHub correspondente.
 
-O agente recebe uma rota de navegação e recupera somente o contexto necessário. Ele não deve carregar automaticamente todo o workspace, toda a biblioteca ou todos os projetos.
+### Biblioteca de Markdowns
+
+A Biblioteca é um repositório de memória para agentes. Ela registra sínteses que precisam sobreviver a conversas, sessões, modelos e ferramentas, por exemplo:
+
+- síntese relevante de uma sessão do ChatGPT;
+- regra global de uso agentic-first;
+- aprendizado transversal aplicável a mais de um projeto;
+- preferência operacional estável;
+- contexto sobre agentes, ferramentas ou integrações que será reutilizado;
+- decisão global que precisa ser recuperada em sessões futuras;
+- padrão recorrente identificado em diferentes trabalhos.
+
+Não devem ir para a Biblioteca:
+
+- o cadastro ou a documentação completa de um projeto;
+- código, arquitetura ou runbook específico já versionado no GitHub;
+- estado atual de branch, PR ou deploy;
+- conversa completa ou log bruto;
+- ajustes triviais;
+- segredos.
+
+Uma memória pode apontar opcionalmente para o projeto em que surgiu, mas essa relação indica apenas **origem ou aplicabilidade**.
+
+## Memory write-back
+
+```text
+sessão ou trabalho relevante
+→ resultado validado
+→ classificar o destino correto
+   projeto específico → página do projeto ou GitHub
+   estado temporário → issue, PR ou HANDOFF
+   memória global/transversal → Biblioteca de Markdowns
+→ revisão humana
+→ liberação para consulta futura
+```
 
 ## Estrutura do repositório
 
 ```text
-selvalabs-agent-os/
+agent-os/
 ├── START-HERE.md
 ├── AGENTS.md
 ├── policies/
@@ -96,9 +93,6 @@ selvalabs-agent-os/
 ├── templates/repository/
 ├── compatibility/
 ├── docs/
-│   ├── notion/
-│   ├── notion-import/
-│   └── governance/
 ├── manifests/
 ├── schemas/
 ├── scripts/
@@ -107,15 +101,13 @@ selvalabs-agent-os/
 
 ## Uso inicial
 
-### 1. Validar o Agent OS
+Validar o Agent OS:
 
 ```bash
 python scripts/validate_agent_os.py .
 ```
 
-### 2. Preparar um repositório piloto
-
-O bootstrap preserva arquivos existentes por padrão.
+Preparar um repositório sem sobrescrever arquivos existentes:
 
 ```bash
 python scripts/bootstrap_repo.py \
@@ -125,67 +117,19 @@ python scripts/bootstrap_repo.py \
   --dry-run
 ```
 
-Depois de revisar:
+## Princípios
 
-```bash
-python scripts/bootstrap_repo.py \
-  --target /caminho/do/repositorio \
-  --project-name "Projeto Exemplo" \
-  --repo-slug "projeto-exemplo"
-```
-
-### 3. Implementar um Cérebro próprio
-
-1. leia `docs/notion/START-HERE.md`;
-2. crie uma página raiz com `START HERE` visível;
-3. crie ou adapte uma Biblioteca de Markdowns;
-4. organize `01` a `05` com views vinculadas;
-5. registre projetos usando campos próprios;
-6. mantenha integrações MCP em leitura até autorização explícita de escrita.
-
-## Fontes canônicas
-
-| Conteúdo | Fonte canônica |
-|---|---|
-| Memória durável e reutilizável | Biblioteca de Markdowns criada pelo usuário |
-| Pesquisa e curadoria | Cérebro editorial do usuário |
-| Catálogo transversal de projetos | Cérebro editorial do usuário |
-| Código, arquitetura, testes e deploy | GitHub do projeto |
-| Estado temporário | Issue, PR e `HANDOFF.md` |
-| Registro cronológico opcional | Registro de atividades ou sessões |
-| Políticas e skills compartilhadas | SelvaLabs Agent OS |
-| Índices, embeddings e consultas rápidas | Camada derivada |
-| Segredos | Gerenciador de segredos; nunca Markdown |
-
-## Fluxo para agentes
-
-```text
-pedido atual
-→ START HERE do Cérebro
-→ registro do projeto
-→ Markdowns liberados e relevantes
-→ START HERE do repositório
-→ issue e branch
-→ implementação e validação
-→ pull request
-→ handoff quando necessário
-→ avaliação e registro de memória
-```
-
-## Pilotos recomendados
-
-1. **Domínio de conhecimento** — testar curadoria, fontes, revisão e memória;
-2. **Projeto de software controlado** — testar START HERE, segurança, handoff, memória e CI;
-3. **Operação autorizada** — testar deploy e rollback somente após os dois primeiros pilotos.
+- todo espaço possui um `START HERE` visível;
+- contexto é recuperado seletivamente;
+- projetos e memória global são estruturas distintas;
+- GitHub permanece canônico para operação específica;
+- integrações externas começam em leitura;
+- regras críticas recebem enforcement técnico;
+- exemplos públicos são fictícios;
+- segredos nunca entram em Markdown.
 
 ## Privacidade e publicação
 
-Exemplos públicos devem ser fictícios. Não inclua nomes reais de clientes, projetos privados, agentes internos, páginas, URLs, IDs ou registros de um workspace particular.
+Este repositório ensina cada usuário a criar o próprio Cérebro. Não publique nomes, URLs, IDs, projetos, agentes ou conteúdo de um workspace real.
 
-**Não torne público diretamente um repositório privado que já possua histórico, issues ou pull requests com contexto interno.** Gere um snapshot sanitizado e publique-o em um repositório novo, com **histórico limpo ou histórico novo**, sem migrar discussões privadas.
-
-Consulte `docs/governance/PUBLIC-SANITIZATION.md` antes de preparar uma release pública.
-
-## Estado do pacote
-
-Versão inicial de arquitetura e bootstrap. Antes da adoção ampla, execute pilotos, registre aprendizados reutilizáveis e ajuste skills e templates com base em evidências.
+Não torne público diretamente um repositório privado que possua histórico interno. Gere um snapshot sanitizado e publique-o em um repositório novo com **histórico limpo ou histórico novo**, sem migrar issues e pull requests privados.
