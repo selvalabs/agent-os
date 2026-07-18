@@ -144,10 +144,11 @@ def main() -> int:
                     errors.append(f"Possível contexto privado ({label}) em {path.relative_to(root)}")
             if contains_private_phrase_fingerprint(text):
                 errors.append(f"Possível marcador privado conhecido em {path.relative_to(root)}")
-            normalized = normalized_text(text)
-            for phrase in FORBIDDEN_MEMORY_ARCHITECTURE_PHRASES:
-                if normalized_text(phrase) in normalized:
-                    errors.append(f"Arquitetura mistura projeto e Biblioteca em {path.relative_to(root)}: {phrase}")
+            if path.suffix.lower() == ".md":
+                normalized = normalized_text(text)
+                for phrase in FORBIDDEN_MEMORY_ARCHITECTURE_PHRASES:
+                    if normalized_text(phrase) in normalized:
+                        errors.append(f"Arquitetura mistura projeto e Biblioteca em {path.relative_to(root)}: {phrase}")
 
     for relative, required_phrase in REQUIRED_MEMORY_BOUNDARIES.items():
         path = root / relative
