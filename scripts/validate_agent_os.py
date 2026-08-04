@@ -100,7 +100,7 @@ def main() -> int:
         "docs/governance/PUBLIC-SANITIZATION.md", "docs/release/PUBLIC-RELEASE.md",
         "docs/notion/START-HERE.md", "docs/notion/NOTION-BRAIN-ARCHITECTURE.md",
         "docs/notion/MARKDOWN-LIBRARY-MEMORY.md", "docs/notion/DATABASE-SCHEMAS.md",
-        "scripts/build_public_snapshot.py", ".github/workflows/build-public-snapshot.yml",
+        "scripts/build_public_snapshot.py", "scripts/validate_security_controls.py", ".github/workflows/build-public-snapshot.yml",
         "templates/repository/START-HERE.md", "templates/repository/AGENTS.md", "templates/repository/CLAUDE.md",
     ]
     for relative in required:

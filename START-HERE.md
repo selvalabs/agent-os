@@ -73,3 +73,7 @@ sessão ou trabalho relevante
 - comece integrações externas em leitura;
 - use exemplos fictícios em conteúdo público;
 - nunca grave segredos em Markdown.
+
+## Segurança durante o desenvolvimento
+
+Para mudanças de segurança, leia policies/secure-development.md, o inventário schemas/security-controls.yaml e o worksheet 	emplates/repository/docs/agent/SECURITY.md. Issue e PR devem registrar o teste negativo, o teste positivo e a evidência de não reprodução.
