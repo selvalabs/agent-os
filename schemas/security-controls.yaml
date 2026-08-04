@@ -1,0 +1,32 @@
+version: 1
+controls:
+  - id: AUTH-SCOPE-001
+    name: scoped-authorization
+    severity: high
+    evidence:
+      - negative-cross-scope-test
+      - positive-same-scope-test
+  - id: CONFIG-FAIL-CLOSED-001
+    name: required-security-configuration
+    severity: high
+    evidence:
+      - missing-value-startup-or-config-test
+      - no-insecure-defaults
+  - id: ABUSE-LIMIT-001
+    name: bounded-abuse-surface
+    severity: medium
+    evidence:
+      - deterministic-limit-test
+      - observable-rejection
+  - id: INGRESS-BOUNDARY-001
+    name: protected-ingress
+    severity: high
+    evidence:
+      - published-port-or-ingress-test
+      - authenticated-route-test
+  - id: SECRET-HYGIENE-001
+    name: secret-hygiene
+    severity: high
+    evidence:
+      - repository-secret-scan
+      - diff-review
