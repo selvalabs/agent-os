@@ -14,7 +14,7 @@ Preencha cada linha com a implementação local, o teste e o comando de validaç
 |---|---|---|
 | Escopo de autorização | TODO | TODO |
 | Configuração fail-closed | TODO | TODO |
-| Limites contra abuso | TODO | TODO |
+| Limites contra abuso e topologia de réplicas | TODO | TODO |
 | Fronteira de ingress | TODO | TODO |
 | Higiene de secrets | TODO | TODO |
 
