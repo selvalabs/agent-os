@@ -17,7 +17,7 @@ The public Agent OS contains generic controls, fictional examples, and validatio
 An agent records applicable controls in the issue, adds a regression test for each security-sensitive behavior, runs the validator and project checks, then includes evidence in the PR. The bootstrap copies the worksheet and templates into new repositories.
 
 ## Non-goals
-This layer does not prescribe a specific cloud, proxy, database, rate-limit backend, or secret manager. Those belong in the Selva-specific adapter or the consuming project.
+This layer does not prescribe a specific cloud, proxy, database, rate-limit backend, or secret manager. Those belong in the Selva-specific adapter or the consuming project. Multi-replica consumers must document and test shared limiter state.
 
 ## Acceptance criteria
 - New bootstrapped repositories receive the security worksheet and GitHub prompts.
