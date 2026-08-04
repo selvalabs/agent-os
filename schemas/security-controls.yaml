@@ -17,6 +17,7 @@ controls:
     severity: medium
     evidence:
       - deterministic-limit-test
+      - replica-topology-evidence
       - observable-rejection
   - id: INGRESS-BOUNDARY-001
     name: protected-ingress

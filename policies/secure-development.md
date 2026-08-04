@@ -6,7 +6,7 @@ These controls are generic and apply to every agentic change. The consuming proj
 
 1. **Authorization scope:** every write path identifies its tenant, project, account or resource scope and rejects requests outside that scope. A global integration credential is never sufficient by itself.
 2. **Fail-closed configuration:** credentials, signing keys, allowlists and ingress protections have no insecure defaults. Missing required values stop startup or deployment.
-3. **Abuse resistance:** externally reachable ingestion, authentication and expensive operations have bounded body size, rate/concurrency limits and observable rejection behavior.
+3. **Abuse resistance:** externally reachable ingestion, authentication and expensive operations have bounded body size, rate/concurrency limits and observable rejection behavior. When more than one application replica can serve traffic, limiter state must be shared through a distributed backend; process-local counters are not sufficient.
 4. **Ingress boundary:** internal services are not published directly when a TLS/authenticated proxy is the intended boundary. Exposed ports must be documented and tested.
 5. **Secret hygiene:** examples use short fictional placeholders; real values come from a secret manager or environment injection and never appear in logs, issues or documentation.
 
