@@ -15,6 +15,8 @@ spec:
     - safe-repo-change
     - github-pr-review
     - agent-handoff
+  optionalSkills:
+    - agentic-mailboxes
   production:
     enabled: false
     deployDocument: docs/agent/DEPLOY.md

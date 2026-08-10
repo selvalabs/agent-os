@@ -66,6 +66,14 @@
             "type": "string"
           },
           "uniqueItems": true
+        },
+        "optionalSkills": {
+          "type": "array",
+          "description": "Skills available for opt-in adoption; they are not enabled by default.",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
         }
       }
     }

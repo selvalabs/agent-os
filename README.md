@@ -103,6 +103,8 @@ agent-os/
 
 ### Skill opcional: `agentic-mailboxes`
 
+No manifesto de um projeto, registre essa capacidade em `spec.optionalSkills` para torná-la disponível como opt-in; não a inclua em `spec.skills` até que o projeto realmente a adote.
+
 A skill `skills/agentic-mailboxes/` é uma capacidade opcional para agentes ou projetos que precisem operar caixas de email agentivas. Use-a quando houver necessidade de receber emails via Cloudflare Email Routing/Worker, processar MIME em um gateway privado, enfileirar mensagens em PostgreSQL, notificar um canal como Telegram, criar fluxos de aprovação ou enviar por Brevo.
 
 Ela não deve ser instalada ou carregada por padrão em projetos que não tenham esse requisito. Cada projeto consumidor deve fornecer seus próprios domínios, remetentes, redes, bancos, credenciais, destinos e runbooks; a skill não contém configuração de um agente específico.
